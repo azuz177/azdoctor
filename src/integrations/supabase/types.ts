@@ -14,16 +14,111 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      consultations: {
+        Row: {
+          ai_response: string | null
+          created_at: string
+          has_image: boolean
+          id: string
+          image_type: string
+          symptoms: string | null
+          user_id: string
+        }
+        Insert: {
+          ai_response?: string | null
+          created_at?: string
+          has_image?: boolean
+          id?: string
+          image_type?: string
+          symptoms?: string | null
+          user_id: string
+        }
+        Update: {
+          ai_response?: string | null
+          created_at?: string
+          has_image?: boolean
+          id?: string
+          image_type?: string
+          symptoms?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      game_scores: {
+        Row: {
+          created_at: string
+          id: string
+          level: number
+          mode: string
+          score: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          level?: number
+          mode?: string
+          score?: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          level?: number
+          mode?: string
+          score?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          biometric_enabled: boolean
+          consult_period_start: string
+          consults_this_month: number
+          created_at: string
+          display_name: string | null
+          id: string
+          one_time_used: boolean
+          plan: Database["public"]["Enums"]["plan_type"]
+          preferred_language: string
+          updated_at: string
+        }
+        Insert: {
+          biometric_enabled?: boolean
+          consult_period_start?: string
+          consults_this_month?: number
+          created_at?: string
+          display_name?: string | null
+          id: string
+          one_time_used?: boolean
+          plan?: Database["public"]["Enums"]["plan_type"]
+          preferred_language?: string
+          updated_at?: string
+        }
+        Update: {
+          biometric_enabled?: boolean
+          consult_period_start?: string
+          consults_this_month?: number
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          one_time_used?: boolean
+          plan?: Database["public"]["Enums"]["plan_type"]
+          preferred_language?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      consume_consult: { Args: { p_user: string }; Returns: Json }
     }
     Enums: {
-      [_ in never]: never
+      plan_type: "free" | "one_time" | "monthly"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +245,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      plan_type: ["free", "one_time", "monthly"],
+    },
   },
 } as const
