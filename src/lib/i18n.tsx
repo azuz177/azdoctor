@@ -170,7 +170,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (typeof window !== "undefined") localStorage.setItem("lang", l);
   };
 
-  const isRtl = LANGUAGES.find((l) => l.code === lang)?.rtl ?? false;
+  const isRtl = (LANGUAGES.find((l) => l.code === lang) as { rtl?: boolean } | undefined)?.rtl ?? false;
   const dir: "ltr" | "rtl" = isRtl ? "rtl" : "ltr";
 
   useEffect(() => {
