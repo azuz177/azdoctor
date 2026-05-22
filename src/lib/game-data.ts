@@ -1,38 +1,106 @@
-// Advanced medical terminology matching game data.
-// Specialized clinical terms, syndromes, rare conditions, and pharmacology.
+// Easier medical terminology matching game data with common terms and emojis.
 
 export type GameItem = {
   term: string;
   emoji: string;
   hint: string;
+  wordOptions: string[];
 };
 
 export const GAME_ITEMS: GameItem[] = [
-  { term: "Pheochromocytoma", emoji: "🧬", hint: "Catecholamine-secreting adrenal tumor" },
-  { term: "Tetralogy of Fallot", emoji: "❤️", hint: "VSD, overriding aorta, RVH, pulmonary stenosis" },
-  { term: "Wegener's Granulomatosis", emoji: "🫁", hint: "c-ANCA positive vasculitis" },
-  { term: "Guillain-Barré", emoji: "🧠", hint: "Ascending demyelinating polyneuropathy" },
-  { term: "Charcot-Marie-Tooth", emoji: "🦴", hint: "Hereditary peripheral neuropathy" },
-  { term: "Zollinger-Ellison", emoji: "💊", hint: "Gastrin-secreting tumor, refractory ulcers" },
-  { term: "Sjögren's Syndrome", emoji: "👁️", hint: "Anti-Ro/La, sicca complex" },
-  { term: "Cushing's Triad", emoji: "🩺", hint: "Bradycardia, hypertension, irregular respirations" },
-  { term: "Glioblastoma Multiforme", emoji: "🧠", hint: "WHO grade IV astrocytoma" },
-  { term: "Pemphigus Vulgaris", emoji: "🩹", hint: "Anti-desmoglein, positive Nikolsky sign" },
-  { term: "Achalasia", emoji: "🫁", hint: "Failure of LES relaxation, bird-beak esophagus" },
-  { term: "Myasthenia Gravis", emoji: "💪", hint: "Anti-AChR antibodies, ptosis worsens with use" },
-  { term: "Pancoast Tumor", emoji: "🫁", hint: "Apical lung mass causing Horner's syndrome" },
-  { term: "Kawasaki Disease", emoji: "❤️", hint: "Pediatric vasculitis, coronary aneurysms" },
-  { term: "Felty's Syndrome", emoji: "🦴", hint: "RA + splenomegaly + neutropenia" },
-  { term: "Prinzmetal Angina", emoji: "❤️", hint: "Coronary vasospasm, ST elevation at rest" },
-  { term: "Boerhaave Syndrome", emoji: "🫁", hint: "Spontaneous esophageal rupture" },
-  { term: "Sarcoidosis", emoji: "🫁", hint: "Non-caseating granulomas, bilateral hilar adenopathy" },
-  { term: "Reye's Syndrome", emoji: "🧠", hint: "Aspirin + viral illness in children → hepatic encephalopathy" },
-  { term: "Hashimoto's Thyroiditis", emoji: "🦋", hint: "Anti-TPO antibodies, hypothyroidism" },
-  { term: "Takayasu Arteritis", emoji: "🩸", hint: "Pulseless disease, large vessel vasculitis" },
-  { term: "Mallory-Weiss Tear", emoji: "🩸", hint: "GE junction tear from retching" },
+  {
+    term: "Heart Attack",
+    emoji: "❤️",
+    hint: "When blood can't reach the heart muscle",
+    wordOptions: ["Chest Pain", "Heart Attack", "Headache", "Stomach Ache"]
+  },
+  {
+    term: "Flu",
+    emoji: "🤧",
+    hint: "Common viral illness with fever and cough",
+    wordOptions: ["Cold", "Flu", "Allergies", "Asthma"]
+  },
+  {
+    term: "Diabetes",
+    emoji: "🩸",
+    hint: "High blood sugar levels",
+    wordOptions: ["Diabetes", "Blood Pressure", "Anemia", "Thyroid"]
+  },
+  {
+    term: "Headache",
+    emoji: "🤕",
+    hint: "Pain in your head",
+    wordOptions: ["Migraine", "Headache", "Dizziness", "Nausea"]
+  },
+  {
+    term: "Fever",
+    emoji: "🌡️",
+    hint: "High body temperature",
+    wordOptions: ["Cold", "Fever", "Heat Stroke", "Chills"]
+  },
+  {
+    term: "Stomach Ache",
+    emoji: "🤢",
+    hint: "Pain in your belly",
+    wordOptions: ["Heartburn", "Stomach Ache", "Back Pain", "Cramps"]
+  },
+  {
+    term: "Allergy",
+    emoji: "🤧",
+    hint: "Body reaction to pollen, food, or animals",
+    wordOptions: ["Cold", "Flu", "Allergy", "Infection"]
+  },
+  {
+    term: "Fracture",
+    emoji: "🦴",
+    hint: "Broken bone",
+    wordOptions: ["Sprain", "Fracture", "Bruise", "Cut"]
+  },
+  {
+    term: "Sunburn",
+    emoji: "☀️",
+    hint: "Skin damage from too much sun",
+    wordOptions: ["Rash", "Sunburn", "Heat Rash", "Allergy"]
+  },
+  {
+    term: "Cough",
+    emoji: "🫁",
+    hint: "Expelling air from lungs suddenly",
+    wordOptions: ["Sneeze", "Cough", "Wheeze", "Hiccup"]
+  },
+  {
+    term: "Rash",
+    emoji: "🔴",
+    hint: "Red irritated skin",
+    wordOptions: ["Bruise", "Rash", "Burn", "Cut"]
+  },
+  {
+    term: "Nausea",
+    emoji: "🤢",
+    hint: "Feeling like you might vomit",
+    wordOptions: ["Hunger", "Nausea", "Heartburn", "Thirst"]
+  },
+  {
+    term: "Back Pain",
+    emoji: "🦴",
+    hint: "Discomfort in your spine area",
+    wordOptions: ["Neck Pain", "Back Pain", "Leg Pain", "Arm Pain"]
+  },
+  {
+    term: "Ear Infection",
+    emoji: "👂",
+    hint: "Painful condition inside your ear",
+    wordOptions: ["Hearing Loss", "Ear Infection", "Ringing", "Dizziness"]
+  },
+  {
+    term: "Blood Pressure",
+    emoji: "🩺",
+    hint: "Force of blood against artery walls",
+    wordOptions: ["Heart Rate", "Blood Pressure", "Oxygen", "Pulse"]
+  },
 ];
 
-export function pickRound(count = 6): { items: GameItem[]; answer: GameItem } {
+export function pickRound(count = 4): { items: GameItem[]; answer: GameItem } {
   const shuffled = [...GAME_ITEMS].sort(() => Math.random() - 0.5).slice(0, count);
   const answer = shuffled[Math.floor(Math.random() * shuffled.length)];
   return { items: shuffled, answer };

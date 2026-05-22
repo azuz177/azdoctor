@@ -14,6 +14,7 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as GameRouteImport } from './routes/game'
 import { Route as DiagnoseRouteImport } from './routes/diagnose'
+import { Route as AppleGameRouteImport } from './routes/apple-game'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SignupRoute = SignupRouteImport.update({
@@ -41,6 +42,11 @@ const DiagnoseRoute = DiagnoseRouteImport.update({
   path: '/diagnose',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppleGameRoute = AppleGameRouteImport.update({
+  id: '/apple-game',
+  path: '/apple-game',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -49,6 +55,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apple-game': typeof AppleGameRoute
   '/diagnose': typeof DiagnoseRoute
   '/game': typeof GameRoute
   '/login': typeof LoginRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apple-game': typeof AppleGameRoute
   '/diagnose': typeof DiagnoseRoute
   '/game': typeof GameRoute
   '/login': typeof LoginRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apple-game': typeof AppleGameRoute
   '/diagnose': typeof DiagnoseRoute
   '/game': typeof GameRoute
   '/login': typeof LoginRoute
@@ -74,12 +83,27 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/diagnose' | '/game' | '/login' | '/pricing' | '/signup'
+  fullPaths:
+    | '/'
+    | '/apple-game'
+    | '/diagnose'
+    | '/game'
+    | '/login'
+    | '/pricing'
+    | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/diagnose' | '/game' | '/login' | '/pricing' | '/signup'
+  to:
+    | '/'
+    | '/apple-game'
+    | '/diagnose'
+    | '/game'
+    | '/login'
+    | '/pricing'
+    | '/signup'
   id:
     | '__root__'
     | '/'
+    | '/apple-game'
     | '/diagnose'
     | '/game'
     | '/login'
@@ -89,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppleGameRoute: typeof AppleGameRoute
   DiagnoseRoute: typeof DiagnoseRoute
   GameRoute: typeof GameRoute
   LoginRoute: typeof LoginRoute
@@ -133,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DiagnoseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apple-game': {
+      id: '/apple-game'
+      path: '/apple-game'
+      fullPath: '/apple-game'
+      preLoaderRoute: typeof AppleGameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -145,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppleGameRoute: AppleGameRoute,
   DiagnoseRoute: DiagnoseRoute,
   GameRoute: GameRoute,
   LoginRoute: LoginRoute,

@@ -5,9 +5,85 @@ import { useI18n } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Camera, Globe2, Gamepad2, ShieldCheck, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import hero from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({ component: Index });
+
+function AnimatedHeroApple() {
+  return (
+    <motion.div
+      animate={{ y: [0, -15, 0, -8, 0] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      className="relative"
+    >
+      <motion.div
+        whileHover={{ scale: 1.05, rotate: [0, -5, 5, 0] }}
+        transition={{ duration: 0.4 }}
+        className="relative w-80 h-80 md:w-96 md:h-96 mx-auto"
+      >
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-red-400 via-red-500 to-red-700"
+          style={{ borderRadius: "50% 50% 45% 45% / 60% 60% 40% 40%" }}
+          animate={{
+            boxShadow: [
+              "0 20px 80px rgba(239, 68, 68, 0.5), 0 10px 30px rgba(239, 68, 68, 0.3)",
+              "0 30px 100px rgba(239, 68, 68, 0.7), 0 15px 40px rgba(239, 68, 68, 0.4)",
+              "0 20px 80px rgba(239, 68, 68, 0.5), 0 10px 30px rgba(239, 68, 68, 0.3)",
+            ],
+          }}
+          transition={{ duration: 3, repeat: Infinity }}
+        >
+          <div className="absolute top-8 left-10 w-16 h-16 bg-white/40 rounded-full blur-md" />
+          <div className="absolute top-16 right-14 w-10 h-8 bg-white/20 rounded-full blur-md rotate-45" />
+        </motion.div>
+
+        <motion.div
+          className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-14 bg-gradient-to-br from-green-400 to-green-600"
+          style={{ borderRadius: "0% 100% 0% 100%" }}
+          animate={{ rotate: [-8, 12, -8] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center pt-6">
+          <div className="flex gap-6 mb-2">
+            <motion.div
+              animate={{ scaleY: [1, 0.1, 1] }}
+              transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3 }}
+            >
+              <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner">
+                <div className="w-8 h-8 bg-slate-900 rounded-full">
+                  <div className="w-3 h-3 bg-white rounded-full ml-1.5 mt-1.5" />
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              animate={{ scaleY: [1, 0.1, 1] }}
+              transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3, delay: 0.1 }}
+            >
+              <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner">
+                <div className="w-8 h-8 bg-slate-900 rounded-full">
+                  <div className="w-3 h-3 bg-white rounded-full ml-1.5 mt-1.5" />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="absolute top-32 left-10 w-6 h-5 bg-pink-400/60 rounded-full blur-md" />
+          <div className="absolute top-32 right-10 w-6 h-5 bg-pink-400/60 rounded-full blur-md" />
+
+          <motion.div
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <div className="w-12 h-6 bg-slate-900 rounded-full mt-2" />
+          </motion.div>
+        </div>
+
+        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-7 bg-gradient-to-b from-amber-700 to-amber-900 rounded-full" />
+      </motion.div>
+    </motion.div>
+  );
+}
 
 function Index() {
   const { t, dir } = useI18n();
@@ -15,7 +91,6 @@ function Index() {
     <div dir={dir} className="min-h-screen flex flex-col bg-background">
       <Header />
       <main className="flex-1">
-        {/* HERO */}
         <section className="relative bg-hero overflow-hidden">
           <div className="container mx-auto px-4 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -47,12 +122,13 @@ function Index() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="relative"
             >
-              <img src={hero} alt="AZDoctor" width={1600} height={1200} className="rounded-3xl shadow-soft" />
+              <Link to="/apple-game">
+                <AnimatedHeroApple />
+              </Link>
             </motion.div>
           </div>
         </section>
 
-        {/* FEATURES */}
         <section className="container mx-auto px-4 py-20">
           <h2 className="font-display text-4xl font-semibold text-center mb-12">{t("feat.title")}</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -80,7 +156,6 @@ function Index() {
           </div>
         </section>
 
-        {/* CTA */}
         <section className="container mx-auto px-4 pb-20">
           <div className="rounded-3xl bg-primary text-primary-foreground p-10 lg:p-16 text-center shadow-glow">
             <h2 className="font-display text-4xl lg:text-5xl font-semibold text-balance">
