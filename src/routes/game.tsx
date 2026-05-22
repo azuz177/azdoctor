@@ -47,7 +47,7 @@ function Game() {
           <div className="inline-block rounded-2xl bg-primary text-primary-foreground px-8 py-6 shadow-glow">
             <div className="text-xs uppercase opacity-70">Term</div>
             <div className="font-display text-3xl mt-1">{round.answer.term}</div>
-            <div className="text-sm opacity-80 mt-1">{round.answer.hint}</div>
+            <div className="text-xs opacity-60 mt-2 uppercase tracking-wider">Hard mode · No hints</div>
           </div>
         </motion.div>
 
