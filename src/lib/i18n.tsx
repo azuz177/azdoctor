@@ -11,6 +11,8 @@ export const LANGUAGES = [
   { code: "hi", name: "हिन्दी", flag: "🇮🇳" },
   { code: "pt", name: "Português", flag: "🇧🇷" },
   { code: "ru", name: "Русский", flag: "🇷🇺" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  { code: "cs", name: "Čeština", flag: "🇨🇿" },
 ] as const;
 
 export type LangCode = (typeof LANGUAGES)[number]["code"];
