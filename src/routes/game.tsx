@@ -15,7 +15,7 @@ function Game() {
   const [score, setScore] = useState(0);
   const [seed, setSeed] = useState(0);
   const [feedback, setFeedback] = useState<"ok" | "no" | null>(null);
-  const round = useMemo(() => pickRound(4), [seed]);
+  const round = useMemo(() => pickRound(6), [seed]);
 
   const guess = (item: GameItem) => {
     if (item.term === round.answer.term) {
@@ -51,7 +51,7 @@ function Game() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-8">
           {round.items.map((it) => (
             <motion.button
               key={it.term}
