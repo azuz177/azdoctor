@@ -37,7 +37,7 @@ export const runDiagnosis = createServerFn({ method: "POST" })
 
     const langName = LANG_NAMES[data.language] ?? "English";
     const system = [
-      `You are DoctorsCon, an educational medical information assistant.`,
+      `You are AZDoctor, an educational medical information assistant.`,
       `Respond ONLY in ${langName}.`,
       `You are NOT a doctor. Always remind the user this is educational only and to consult a licensed physician.`,
       `Structure your response with: 1) Observations 2) Possible considerations (educational) 3) Self-care tips 4) When to seek urgent care.`,
