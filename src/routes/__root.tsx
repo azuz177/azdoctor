@@ -6,6 +6,7 @@ import { I18nProvider } from "@/lib/i18n";
 import { AuthProvider } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/sonner";
+import { AppleMascot } from "@/components/AppleMascot";
 
 function NotFoundComponent() {
   return (
@@ -84,6 +85,7 @@ function RootComponent() {
       <I18nProvider>
         <AuthProvider>
           <Outlet />
+          <AppleMascot />
           <Toaster richColors position="top-center" />
         </AuthProvider>
       </I18nProvider>
