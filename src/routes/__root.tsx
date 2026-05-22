@@ -40,10 +40,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "DoctorsCon — AI medical companion in your language" },
+      { title: "AZDoctor — AI medical companion in your language" },
       { name: "description", content: "Snap a photo of skin, X-ray, MRI or CT and get an instant educational explanation in 10+ languages. Plus a free medical learning game." },
       { name: "theme-color", content: "#0e4e57" },
-      { property: "og:title", content: "DoctorsCon" },
+      { property: "og:title", content: "AZDoctor" },
       { property: "og:description", content: "AI-powered medical companion in your language." },
       { property: "og:type", content: "website" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

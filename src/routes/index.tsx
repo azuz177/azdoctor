@@ -47,7 +47,7 @@ function Index() {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="relative"
             >
-              <img src={hero} alt="DoctorsCon" width={1600} height={1200} className="rounded-3xl shadow-soft" />
+              <img src={hero} alt="AZDoctor" width={1600} height={1200} className="rounded-3xl shadow-soft" />
             </motion.div>
           </div>
         </section>
@@ -86,7 +86,7 @@ function Index() {
             <h2 className="font-display text-4xl lg:text-5xl font-semibold text-balance">
               Your symptoms, decoded — in your language.
             </h2>
-            <p className="mt-4 opacity-80 max-w-xl mx-auto">Try a free consult, or jump into the learning game right now.</p>
+            <p className="mt-4 opacity-80 max-w-xl mx-auto">Start your consultation, or jump into the learning game right now.</p>
             <div className="mt-6 flex flex-wrap gap-3 justify-center">
               <Button asChild size="lg" variant="secondary" className="rounded-full">
                 <Link to="/pricing">{t("nav.pricing")}</Link>

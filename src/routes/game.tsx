@@ -15,7 +15,7 @@ function Game() {
   const [score, setScore] = useState(0);
   const [seed, setSeed] = useState(0);
   const [feedback, setFeedback] = useState<"ok" | "no" | null>(null);
-  const round = useMemo(() => pickRound(4), [seed]);
+  const round = useMemo(() => pickRound(6), [seed]);
 
   const guess = (item: GameItem) => {
     if (item.term === round.answer.term) {
@@ -47,11 +47,11 @@ function Game() {
           <div className="inline-block rounded-2xl bg-primary text-primary-foreground px-8 py-6 shadow-glow">
             <div className="text-xs uppercase opacity-70">Term</div>
             <div className="font-display text-3xl mt-1">{round.answer.term}</div>
-            <div className="text-sm opacity-80 mt-1">{round.answer.hint}</div>
+            <div className="text-xs opacity-60 mt-2 uppercase tracking-wider">Hard mode · No hints</div>
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-8">
           {round.items.map((it) => (
             <motion.button
               key={it.term}
