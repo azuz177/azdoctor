@@ -16,24 +16,23 @@ function AnimatedHeroApple() {
       className="relative"
     >
       <motion.div
-        whileHover={{ scale: 1.05, rotate: [0, -5, 5, 0] }}
-        transition={{ duration: 0.4 }}
         className="relative w-80 h-80 md:w-96 md:h-96 mx-auto"
       >
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-red-400 via-red-500 to-red-700"
+          className="absolute inset-0 bg-gradient-to-br from-green-300 via-green-500 to-green-700"
           style={{ borderRadius: "50% 50% 45% 45% / 60% 60% 40% 40%" }}
           animate={{
             boxShadow: [
-              "0 20px 80px rgba(239, 68, 68, 0.5), 0 10px 30px rgba(239, 68, 68, 0.3)",
-              "0 30px 100px rgba(239, 68, 68, 0.7), 0 15px 40px rgba(239, 68, 68, 0.4)",
-              "0 20px 80px rgba(239, 68, 68, 0.5), 0 10px 30px rgba(239, 68, 68, 0.3)",
+              "0 20px 80px rgba(34, 197, 94, 0.5), 0 10px 30px rgba(34, 197, 94, 0.3)",
+              "0 30px 100px rgba(34, 197, 94, 0.7), 0 15px 40px rgba(34, 197, 94, 0.4)",
+              "0 20px 80px rgba(34, 197, 94, 0.5), 0 10px 30px rgba(34, 197, 94, 0.3)",
             ],
           }}
           transition={{ duration: 3, repeat: Infinity }}
         >
-          <div className="absolute top-8 left-10 w-16 h-16 bg-white/40 rounded-full blur-md" />
-          <div className="absolute top-16 right-14 w-10 h-8 bg-white/20 rounded-full blur-md rotate-45" />
+          <div className="absolute top-8 left-10 w-16 h-16 bg-white/40 rounded-full" />
+          <div className="absolute top-10 left-12 w-8 h-8 bg-white/80 rounded-full" />
+          <div className="absolute top-16 right-14 w-10 h-8 bg-white/20 rounded-full rotate-45" />
         </motion.div>
 
         <motion.div
@@ -49,9 +48,10 @@ function AnimatedHeroApple() {
               animate={{ scaleY: [1, 0.1, 1] }}
               transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3 }}
             >
-              <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner">
-                <div className="w-8 h-8 bg-slate-900 rounded-full">
-                  <div className="w-3 h-3 bg-white rounded-full ml-1.5 mt-1.5" />
+              <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner border-2 border-green-100">
+                <div className="w-9 h-9 bg-emerald-600 rounded-full relative">
+                  <div className="absolute top-1.5 left-2 w-3.5 h-3.5 bg-emerald-900 rounded-full" />
+                  <div className="absolute top-2 right-2 w-2.5 h-2.5 bg-white rounded-full" />
                 </div>
               </div>
             </motion.div>
@@ -60,9 +60,10 @@ function AnimatedHeroApple() {
               animate={{ scaleY: [1, 0.1, 1] }}
               transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3, delay: 0.1 }}
             >
-              <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner">
-                <div className="w-8 h-8 bg-slate-900 rounded-full">
-                  <div className="w-3 h-3 bg-white rounded-full ml-1.5 mt-1.5" />
+              <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner border-2 border-green-100">
+                <div className="w-9 h-9 bg-emerald-600 rounded-full relative">
+                  <div className="absolute top-1.5 left-2 w-3.5 h-3.5 bg-emerald-900 rounded-full" />
+                  <div className="absolute top-2 right-2 w-2.5 h-2.5 bg-white rounded-full" />
                 </div>
               </div>
             </motion.div>
@@ -75,7 +76,9 @@ function AnimatedHeroApple() {
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <div className="w-12 h-6 bg-slate-900 rounded-full mt-2" />
+            <div className="w-12 h-6 bg-pink-400 rounded-full border-2 border-pink-500 mt-2 overflow-hidden">
+              <div className="w-full h-3 bg-pink-300 rounded-t-full" />
+            </div>
           </motion.div>
         </div>
 
@@ -120,11 +123,9 @@ function Index() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="relative"
+              className="relative pointer-events-none"
             >
-              <Link to="/apple-game">
-                <AnimatedHeroApple />
-              </Link>
+              <AnimatedHeroApple />
             </motion.div>
           </div>
         </section>
