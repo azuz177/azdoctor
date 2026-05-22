@@ -10,16 +10,15 @@ export const Route = createFileRoute("/pricing")({ component: Pricing });
 function Pricing() {
   const { t, dir } = useI18n();
   const plans = [
-    { key: "free", t: t("price.free.t"), p: t("price.free.p"), d: t("price.free.d"), popular: false },
-    { key: "one", t: t("price.one.t"), p: t("price.one.p"), d: t("price.one.d"), popular: true },
-    { key: "month", t: t("price.month.t"), p: t("price.month.p"), d: t("price.month.d"), popular: false },
+    { key: "one", t: t("price.one.t"), p: t("price.one.p"), d: t("price.one.d"), popular: false },
+    { key: "month", t: t("price.month.t"), p: t("price.month.p"), d: t("price.month.d"), popular: true },
   ];
   return (
     <div dir={dir} className="min-h-screen flex flex-col bg-background">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-16">
         <h1 className="font-display text-5xl text-center font-semibold">{t("price.title")}</h1>
-        <div className="grid md:grid-cols-3 gap-5 mt-12 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-5 mt-12 max-w-3xl mx-auto">
           {plans.map((p) => (
             <div key={p.key} className={`relative rounded-2xl border p-7 shadow-soft ${p.popular ? "border-primary bg-card ring-2 ring-primary/30" : "border-border bg-card"}`}>
               {p.popular && (
@@ -38,7 +37,7 @@ function Pricing() {
           ))}
         </div>
         <p className="text-xs text-center text-muted-foreground mt-10 max-w-2xl mx-auto">
-          Payments will be enabled once your account is on the Pro workspace. Free trial works immediately on signup.
+          Payments will be enabled once your account is on the Pro workspace.
         </p>
       </main>
       <Footer />
