@@ -1,105 +1,129 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Header, Footer } from "@/components";
 import { useI18n } from "@/lib/i18n";
 import { useMemo, useState } from "react";
 import { pickRound, type GameItem } from "@/lib/game-data";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { AdSlot } from "@/components/AdSlot";
 
-export const Route = createFileRoute("/game")({ component: Game });
+export const Route = createFileRoute("/game")({
+  component: GamePage,
+});
 
-function Game() {
-  const { t, dir } = useI18n();
+function GamePage() {
+  const { t } = useI18n();
   const [score, setScore] = useState(0);
-  const [seed, setSeed] = useState(0);
-  const [feedback, setFeedback] = useState<"ok" | "no" | null>(null);
+  const [feedback, setFeedback] = useState<"correct" | "wrong" | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const round = useMemo(() => pickRound(4), [seed]);
+  const [roundKey, setRoundKey] = useState(0);
 
-  const guess = (item: GameItem, option: string) => {
+  const round = useMemo(() => pickRound(), [roundKey]);
+  const { items, answer } = round;
+
+  const handleOptionClick = (option: string) => {
+    if (selectedOption) return;
+    
     setSelectedOption(option);
-    if (option === round.answer.term) {
-      setScore((s) => s + 10);
-      setFeedback("ok");
-      setTimeout(() => { setFeedback(null); setSelectedOption(null); setSeed((s) => s + 1); }, 1200);
+    
+    if (option === answer.term) {
+      setFeedback("correct");
+      setScore((s) => s + 1);
     } else {
-      setFeedback("no");
-      setTimeout(() => { setFeedback(null); setSelectedOption(null); }, 800);
+      setFeedback("wrong");
     }
   };
 
+  const nextRound = () => {
+    setFeedback(null);
+    setSelectedOption(null);
+    setRoundKey((k) => k + 1);
+  };
+
   return (
-    <div dir={dir} className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header />
-      <main className="flex-1 container mx-auto px-4 py-12 max-w-2xl">
-        <div className="flex items-end justify-between mb-2">
-          <div>
-            <h1 className="font-display text-4xl font-semibold">{t("game.title")}</h1>
-            <p className="text-muted-foreground mt-1">{t("game.sub")}</p>
+      <main className="flex-1 container mx-auto px-4 py-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-2">{t("game.title")}</h1>
+            <p className="text-muted-foreground">{t("game.sub")}</p>
           </div>
-          <div className="text-right">
-            <div className="text-xs uppercase text-muted-foreground">{t("game.score")}</div>
-            <div className="font-display text-3xl">{score}</div>
-          </div>
-        </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div key={seed} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mt-8 text-center">
+          <AdSlot />
+
+          <div className="mt-8 flex justify-between items-center mb-4">
+            <span className="text-sm font-medium text-muted-foreground">
+              {t("game.score")}: {score}
+            </span>
+          </div>
+
+          <AnimatePresence mode="wait">
             <motion.div
-              className="inline-flex flex-col items-center rounded-3xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground px-10 py-8 shadow-glow"
-              whileHover={{ scale: 1.02 }}
+              key={roundKey}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="bg-card border rounded-2xl p-8 text-center"
             >
-              <span className="text-7xl mb-4">{round.answer.emoji}</span>
-              <div className="text-xs uppercase opacity-70 tracking-wider">What is this?</div>
-              <div className="text-sm opacity-90 mt-2 max-w-xs">{round.answer.hint}</div>
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="mt-10">
-          <p className="text-center text-sm text-muted-foreground mb-4">Pick the correct word:</p>
-          <div className="grid grid-cols-2 gap-4">
-            {round.answer.wordOptions.map((option, idx) => (
-              <motion.button
-                key={`${seed}-${option}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => guess(round.answer, option)}
-                disabled={feedback !== null}
-                className={`rounded-2xl px-6 py-5 border-2 text-lg font-medium transition-all ${
-                  selectedOption === option
-                    ? feedback === "ok"
-                      ? "bg-green-500 text-white border-green-500"
-                      : "bg-destructive text-white border-destructive"
-                    : "bg-card border-border hover:border-primary hover:bg-primary/5"
-                }`}
-                aria-label={option}
+              <motion.div
+                className="text-8xl mb-4"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
               >
-                {option}
-              </motion.button>
-            ))}
+                {answer.emoji}
+              </motion.div>
+
+              <p className="text-lg text-muted-foreground mb-8">{answer.hint}</p>
+
+              <div className="grid grid-cols-2 gap-3">
+                {items.map((item) => (
+                  <Button
+                    key={item.term}
+                    variant={
+                      selectedOption
+                        ? item.term === answer.term
+                          ? "default"
+                          : selectedOption === item.term
+                            ? "destructive"
+                            : "outline"
+                        : "outline"
+                    }
+                    className={`h-14 text-base font-medium ${
+                      selectedOption && item.term === answer.term ? "bg-green-600 hover:bg-green-600" : ""
+                    }`}
+                    onClick={() => handleOptionClick(item.term)}
+                    disabled={!!selectedOption}
+                  >
+                    {item.term}
+                  </Button>
+                ))}
+              </div>
+
+              {feedback && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="mt-6"
+                >
+                  <p
+                    className={`text-lg font-bold mb-4 ${
+                      feedback === "correct" ? "text-green-600" : "text-red-500"
+                    }`}
+                  >
+                    {feedback === "correct" ? t("game.correct") : t("game.wrong")}
+                  </p>
+                  <Button onClick={nextRound}>{t("game.next")}</Button>
+                </motion.div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="mt-8">
+            <AdSlot />
           </div>
         </div>
-
-        {feedback && (
-          <motion.p
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className={`mt-6 text-center text-3xl font-bold ${feedback === "ok" ? "text-green-500" : "text-destructive"}`}
-          >
-            {feedback === "ok" ? `🎉 ${t("game.correct")}` : `❌ ${t("game.wrong")}`}
-          </motion.p>
-        )}
-
-        <div className="mt-8 text-center">
-          <Button variant="outline" onClick={() => { setSelectedOption(null); setFeedback(null); setSeed((s) => s + 1); }}>{t("game.next")}</Button>
-        </div>
-
-        <div className="mt-10"><AdSlot /></div>
       </main>
       <Footer />
     </div>

@@ -1,59 +1,93 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Header, Footer } from "@/components";
 import { useI18n } from "@/lib/i18n";
-import { useState, type FormEvent } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
+import { useState } from "react";
 
-export const Route = createFileRoute("/signup")({ component: Signup });
+export const Route = createFileRoute("/signup")({
+  component: SignupPage,
+});
 
-function Signup() {
-  const { t, dir } = useI18n();
-  const nav = useNavigate();
-  const [name, setName] = useState("");
+function SignupPage() {
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email, password,
-      options: { emailRedirectTo: window.location.origin, data: { display_name: name } },
-    });
-    setLoading(false);
-    if (error) return toast.error(error.message);
-    toast.success("Check your email to confirm your account");
-    nav({ to: "/login" });
-  };
-
-  const google = async () => {
-    const r = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/diagnose" });
-    if (r.error) toast.error(r.error.message);
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    setIsLoading(true);
+    // Simulate signup
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setIsLoading(false);
   };
 
   return (
-    <div dir={dir} className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header />
-      <main className="flex-1 grid place-items-center px-4 py-12">
-        <div className="w-full max-w-sm bg-card border border-border rounded-2xl p-8 shadow-soft">
-          <h1 className="font-display text-2xl">{t("auth.signup")}</h1>
-          <Button onClick={google} variant="outline" className="w-full mt-6">{t("auth.google")}</Button>
-          <div className="my-5 text-center text-xs text-muted-foreground">— or —</div>
-          <form onSubmit={onSubmit} className="space-y-3">
-            <div><Label>{t("auth.name")}</Label><Input value={name} onChange={(e) => setName(e.target.value)} /></div>
-            <div><Label>{t("auth.email")}</Label><Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-            <div><Label>{t("auth.password")}</Label><Input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} /></div>
-            <Button type="submit" disabled={loading} className="w-full">{loading ? "…" : t("auth.signup")}</Button>
+      <main className="flex-1 container mx-auto px-4 py-16 flex items-center justify-center">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-2">{t("auth.signup")}</h1>
+            <p className="text-muted-foreground">
+              Create an account to get started.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">{t("auth.email")}</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password">{t("auth.password")}</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Creating account..." : t("auth.signup")}
+            </Button>
           </form>
-          <p className="mt-4 text-xs text-center text-muted-foreground">
-            {t("auth.have")} <Link to="/login" className="text-primary underline">{t("auth.signin")}</Link>
+
+          <p className="text-center text-sm text-muted-foreground mt-6">
+            Already have an account?{" "}
+            <Link to="/login" className="text-primary hover:underline font-medium">
+              Sign in
+            </Link>
           </p>
         </div>
       </main>

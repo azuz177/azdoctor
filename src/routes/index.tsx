@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Camera, Globe2, Gamepad2, ShieldCheck, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
-export const Route = createFileRoute("/")({ component: Index });
-
 function AnimatedHeroApple() {
   return (
     <motion.div
@@ -15,75 +13,46 @@ function AnimatedHeroApple() {
       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       className="relative"
     >
-      <motion.div
-        className="relative w-80 h-80 md:w-96 md:h-96 mx-auto"
-      >
-        <motion.div
+      <div className="relative w-80 h-80 md:w-96 md:h-96 mx-auto">
+        <div
           className="absolute inset-0 bg-gradient-to-br from-green-300 via-green-500 to-green-700"
           style={{ borderRadius: "50% 50% 45% 45% / 60% 60% 40% 40%" }}
-          animate={{
-            boxShadow: [
-              "0 20px 80px rgba(34, 197, 94, 0.5), 0 10px 30px rgba(34, 197, 94, 0.3)",
-              "0 30px 100px rgba(34, 197, 94, 0.7), 0 15px 40px rgba(34, 197, 94, 0.4)",
-              "0 20px 80px rgba(34, 197, 94, 0.5), 0 10px 30px rgba(34, 197, 94, 0.3)",
-            ],
-          }}
-          transition={{ duration: 3, repeat: Infinity }}
         >
           <div className="absolute top-8 left-10 w-16 h-16 bg-white/40 rounded-full" />
           <div className="absolute top-10 left-12 w-8 h-8 bg-white/80 rounded-full" />
-          <div className="absolute top-16 right-14 w-10 h-8 bg-white/20 rounded-full rotate-45" />
-        </motion.div>
+        </div>
 
-        <motion.div
+        <div
           className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-14 bg-gradient-to-br from-green-400 to-green-600"
           style={{ borderRadius: "0% 100% 0% 100%" }}
-          animate={{ rotate: [-8, 12, -8] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
 
         <div className="absolute inset-0 flex flex-col items-center justify-center pt-6">
           <div className="flex gap-6 mb-2">
-            <motion.div
-              animate={{ scaleY: [1, 0.1, 1] }}
-              transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3 }}
-            >
-              <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner border-2 border-green-100">
-                <div className="w-9 h-9 bg-emerald-600 rounded-full relative">
-                  <div className="absolute top-1.5 left-2 w-3.5 h-3.5 bg-emerald-900 rounded-full" />
-                  <div className="absolute top-2 right-2 w-2.5 h-2.5 bg-white rounded-full" />
-                </div>
+            <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner border-2 border-green-100">
+              <div className="w-9 h-9 bg-emerald-600 rounded-full relative">
+                <div className="absolute top-1.5 left-2 w-3.5 h-3.5 bg-emerald-900 rounded-full" />
+                <div className="absolute top-2 right-2 w-2.5 h-2.5 bg-white rounded-full" />
               </div>
-            </motion.div>
-
-            <motion.div
-              animate={{ scaleY: [1, 0.1, 1] }}
-              transition={{ duration: 0.2, repeat: Infinity, repeatDelay: 3, delay: 0.1 }}
-            >
-              <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner border-2 border-green-100">
-                <div className="w-9 h-9 bg-emerald-600 rounded-full relative">
-                  <div className="absolute top-1.5 left-2 w-3.5 h-3.5 bg-emerald-900 rounded-full" />
-                  <div className="absolute top-2 right-2 w-2.5 h-2.5 bg-white rounded-full" />
-                </div>
+            </div>
+            <div className="w-14 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-inner border-2 border-green-100">
+              <div className="w-9 h-9 bg-emerald-600 rounded-full relative">
+                <div className="absolute top-1.5 left-2 w-3.5 h-3.5 bg-emerald-900 rounded-full" />
+                <div className="absolute top-2 right-2 w-2.5 h-2.5 bg-white rounded-full" />
               </div>
-            </motion.div>
+            </div>
           </div>
 
           <div className="absolute top-32 left-10 w-6 h-5 bg-pink-400/60 rounded-full blur-md" />
           <div className="absolute top-32 right-10 w-6 h-5 bg-pink-400/60 rounded-full blur-md" />
 
-          <motion.div
-            animate={{ scale: [1, 1.2, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <div className="w-12 h-6 bg-pink-400 rounded-full border-2 border-pink-500 mt-2 overflow-hidden">
-              <div className="w-full h-3 bg-pink-300 rounded-t-full" />
-            </div>
-          </motion.div>
+          <div className="w-12 h-6 bg-pink-400 rounded-full border-2 border-pink-500 mt-2 overflow-hidden">
+            <div className="w-full h-3 bg-pink-300 rounded-t-full" />
+          </div>
         </div>
 
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-7 bg-gradient-to-b from-amber-700 to-amber-900 rounded-full" />
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
@@ -94,7 +63,7 @@ function Index() {
     <div dir={dir} className="min-h-screen flex flex-col bg-background">
       <Header />
       <main className="flex-1">
-        <section className="relative bg-hero overflow-hidden">
+        <section className="relative overflow-hidden">
           <div className="container mx-auto px-4 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -158,16 +127,18 @@ function Index() {
         </section>
 
         <section className="container mx-auto px-4 pb-20">
-          <div className="rounded-3xl bg-primary text-primary-foreground p-10 lg:p-16 text-center shadow-glow">
+          <div className="rounded-3xl bg-primary text-primary-foreground p-10 lg:p-16 text-center">
             <h2 className="font-display text-4xl lg:text-5xl font-semibold text-balance">
-              Your symptoms, decoded — in your language.
+              Your symptoms, decoded.
             </h2>
-            <p className="mt-4 opacity-80 max-w-xl mx-auto">Start your consultation, or jump into the learning game right now.</p>
+            <p className="mt-4 opacity-80 max-w-xl mx-auto">
+              Start your consultation, or jump into the learning game.
+            </p>
             <div className="mt-6 flex flex-wrap gap-3 justify-center">
               <Button asChild size="lg" variant="secondary" className="rounded-full">
                 <Link to="/pricing">{t("nav.pricing")}</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+              <Button asChild size="lg" variant="outline" className="rounded-full bg-transparent border-white/30">
                 <Link to="/login">{t("nav.signin")}</Link>
               </Button>
             </div>
@@ -178,3 +149,7 @@ function Index() {
     </div>
   );
 }
+
+export const Route = createFileRoute("/")({
+  component: Index,
+});

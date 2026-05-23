@@ -1,50 +1,87 @@
 import { Link } from "@tanstack/react-router";
-import { useI18n, LANGUAGES, type LangCode } from "@/lib/i18n";
-import { useAuth } from "@/lib/auth";
-import { Globe } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useI18n, LANGUAGES } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo.png";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 export function Header() {
-  const { t, lang, setLang } = useI18n();
-  const { user, signOut } = useAuth();
+  const { t, dir, lang, setLang } = useI18n();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
-      <div className="container mx-auto flex items-center justify-between px-4 h-16">
-        <Link to="/" className="flex items-center gap-2 font-display text-xl font-semibold text-primary">
-          <img src={logo} alt="AZDoctor" className="h-9 w-9 rounded-xl shadow-glow" />
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <Link to="/" className="font-display text-2xl font-bold text-primary">
           AZDoctor
         </Link>
-        <nav className="hidden md:flex items-center gap-6 text-sm">
-          <Link to="/diagnose" className="hover:text-primary transition-colors">{t("nav.diagnose")}</Link>
-          <Link to="/game" className="hover:text-primary transition-colors">{t("nav.game")}</Link>
-          <Link to="/pricing" className="hover:text-primary transition-colors">{t("nav.pricing")}</Link>
+
+        <nav className="hidden md:flex items-center gap-6">
+          <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
+            {t("nav.home")}
+          </Link>
+          <Link to="/diagnose" className="text-sm font-medium hover:text-primary transition-colors">
+            {t("nav.diagnose")}
+          </Link>
+          <Link to="/game" className="text-sm font-medium hover:text-primary transition-colors">
+            {t("nav.game")}
+          </Link>
+          <Link to="/pricing" className="text-sm font-medium hover:text-primary transition-colors">
+            {t("nav.pricing")}
+          </Link>
         </nav>
-        <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="gap-1.5">
-                <Globe className="h-4 w-4" />
-                <span className="hidden sm:inline">{LANGUAGES.find((l) => l.code === lang)?.flag}</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="max-h-80 overflow-auto">
+
+        <div className="hidden md:flex items-center gap-3">
+          <Select value={lang} onValueChange={(v) => setLang(v as typeof lang)}>
+            <SelectTrigger className="w-[100px] h-8">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
               {LANGUAGES.map((l) => (
-                <DropdownMenuItem key={l.code} onSelect={() => setLang(l.code as LangCode)}>
-                  <span className="mr-2">{l.flag}</span> {l.name}
-                </DropdownMenuItem>
+                <SelectItem key={l.code} value={l.code}>
+                  {l.flag} {l.name}
+                </SelectItem>
               ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          {user ? (
-            <Button variant="outline" size="sm" onClick={() => signOut()}>{t("nav.signout")}</Button>
-          ) : (
-            <Button asChild size="sm"><Link to="/login">{t("nav.signin")}</Link></Button>
-          )}
+            </SelectContent>
+          </Select>
+
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/login">{t("nav.signin")}</Link>
+          </Button>
         </div>
+
+        <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
+
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t bg-background">
+          <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+            <Link to="/" className="text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+              {t("nav.home")}
+            </Link>
+            <Link to="/diagnose" className="text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+              {t("nav.diagnose")}
+            </Link>
+            <Link to="/game" className="text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+              {t("nav.game")}
+            </Link>
+            <Link to="/pricing" className="text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+              {t("nav.pricing")}
+            </Link>
+            <Link to="/login" className="text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+              {t("nav.signin")}
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

@@ -1,44 +1,90 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Header, Footer } from "@/components";
 import { useI18n } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 
-export const Route = createFileRoute("/pricing")({ component: Pricing });
+export const Route = createFileRoute("/pricing")({
+  component: PricingPage,
+});
 
-function Pricing() {
-  const { t, dir } = useI18n();
+function PricingPage() {
+  const { t } = useI18n();
+
   const plans = [
-    { key: "one", t: t("price.one.t"), p: t("price.one.p"), d: t("price.one.d"), popular: false },
-    { key: "month", t: t("price.month.t"), p: t("price.month.p"), d: t("price.month.d"), popular: true },
+    {
+      name: t("price.one.t"),
+      price: t("price.one.p"),
+      description: t("price.one.d"),
+      features: ["Single deep diagnosis", "Image analysis", "Symptom checker", "7-day history"],
+      popular: false,
+    },
+    {
+      name: t("price.month.t"),
+      price: t("price.month.p"),
+      description: t("price.month.d"),
+      features: [
+        "5 consults per month",
+        "Image analysis",
+        "Symptom checker",
+        "Unlimited history",
+        "Priority support",
+        "Family sharing",
+      ],
+      popular: true,
+    },
   ];
+
   return (
-    <div dir={dir} className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-16">
-        <h1 className="font-display text-5xl text-center font-semibold">{t("price.title")}</h1>
-        <div className="grid md:grid-cols-2 gap-5 mt-12 max-w-3xl mx-auto">
-          {plans.map((p) => (
-            <div key={p.key} className={`relative rounded-2xl border p-7 shadow-soft ${p.popular ? "border-primary bg-card ring-2 ring-primary/30" : "border-border bg-card"}`}>
-              {p.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground text-xs font-medium px-3 py-1 rounded-full">{t("price.popular")}</span>
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <h1 className="text-4xl font-bold mb-4">{t("price.title")}</h1>
+          <p className="text-lg text-muted-foreground">
+            Choose the plan that works best for you. No hidden fees.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              className={`relative rounded-2xl border bg-card p-8 ${
+                plan.popular ? "border-primary shadow-lg" : "border-border"
+              }`}
+            >
+              {plan.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full">
+                    {t("price.popular")}
+                  </span>
+                </div>
               )}
-              <h3 className="font-display text-xl">{p.t}</h3>
-              <div className="mt-3 text-4xl font-display font-semibold">{p.p}</div>
-              <p className="text-sm text-muted-foreground mt-3">{p.d}</p>
-              <Button asChild className="w-full mt-6"><Link to="/signup">{t("price.cta")}</Link></Button>
-              <ul className="mt-5 space-y-2 text-sm">
-                <li className="flex gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /> Camera & file upload</li>
-                <li className="flex gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /> Multi-language responses</li>
-                <li className="flex gap-2"><Check className="h-4 w-4 text-primary mt-0.5" /> History stored securely</li>
+
+              <div className="text-center mb-6">
+                <h3 className="text-lg font-semibold mb-2">{plan.name}</h3>
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-4xl font-bold">{plan.price}</span>
+                </div>
+                <p className="text-sm text-muted-foreground mt-2">{plan.description}</p>
+              </div>
+
+              <ul className="space-y-3 mb-8">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="flex items-center gap-3">
+                    <Check className="h-5 w-5 text-green-600 flex-shrink-0" />
+                    <span className="text-sm">{feature}</span>
+                  </li>
+                ))}
               </ul>
+
+              <Button asChild className="w-full" variant={plan.popular ? "default" : "outline"}>
+                <Link to="/signup">{t("price.cta")}</Link>
+              </Button>
             </div>
           ))}
         </div>
-        <p className="text-xs text-center text-muted-foreground mt-10 max-w-2xl mx-auto">
-          Payments will be enabled once your account is on the Pro workspace.
-        </p>
       </main>
       <Footer />
     </div>
